@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TODO List</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <h1>TODO List</h1>
+    <div>
+      <input type="text" v-model="text">
+      <button @click="addTodo">Add</button>
+    </div>
+    <div>
+      <ul>
+        <li v-for="item in todolist">
+          <input type="checkbox" @change="checkChanged(item)" v-model="item.checked">
+          <label v-bind:class="item.style">{{ item.todo }}</label>
+          <button @click="deleteTodo(item)">Delete</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <script>
+    const vm = new Vue({
+      el: "#app",
+      data() {
+        return {
+          text: '',
+          todolist: [],
+        }
+      },
+      methods: {
+        addTodo() {
+          let todoItem = {'checked': false,'todo': this.text, 'style': ''}
+          this.todolist.push(todoItem);
+        },
+        checkChanged(item) {
+          item.style = (item.checked) ? 'text_decoration' : '';
+        },
+        deleteTodo(item) {
+          if(item.checked) {
+            let index = this.todolist.indexOf(item);
+            this.todolist.splice(index, 1);
+          }
+        }
+      }
+    })
+  </script>
+  <style>
+    ul {
+      margin: 20px 0 0 0;
+      padding: 0;
+    }
+    li {
+      list-style: none;
+    }
+    .text_decoration {
+      text-decoration: line-through;
+    }
+  </style>
+</body>
+</html>
