@@ -16,9 +16,9 @@
     </div>
     <div>
       <ul>
-        <li v-for="item in todolist">
-          <input type="checkbox" @change="checkChanged(item)" v-model="item.checked">
-          <label v-bind:class="item.style">{{ item.todo }}</label>
+        <li v-for="(item, index) in todolist" :key="index">
+          <input type="checkbox" @change="checkChanged(item)" v-model="item.checked" v-bind:id="index">
+          <label v-bind:class="item.style" v-bind:for="index">{{ item.todo }}</label>
           <button @click="deleteTodo(item)">Delete</button>
         </li>
       </ul>
